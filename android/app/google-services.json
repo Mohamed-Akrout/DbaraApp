@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "853374270179",
+    "project_id": "dbaramobile",
+    "storage_bucket": "dbaramobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853374270179:android:7b6f57b94cee49c2c6e3d6",
+        "android_client_info": {
+          "package_name": "com.example.dbaramobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853374270179-tf6mclf9c2hlrhkpksc9smjptmf297ik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD18xTlmqIi8GFHtQbfOrfpyN9RaPviDfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853374270179-tf6mclf9c2hlrhkpksc9smjptmf297ik.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "853374270179-lbv1nv07ek5aum3pm8j0cs5pgdv8rtmn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dbaramobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
