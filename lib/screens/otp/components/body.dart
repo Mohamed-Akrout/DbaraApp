@@ -22,7 +22,6 @@ class Body extends StatelessWidget {
               ),
               Text("We sent your code to +1 898 860 ***"),
               buildTimer(),
-              
               OtpForm(),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
               GestureDetector(

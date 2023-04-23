@@ -67,7 +67,8 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, ProfileScreen.routeName),
               ),
             ],
-          )),
+          ),
+      ),
     );
   }
 }

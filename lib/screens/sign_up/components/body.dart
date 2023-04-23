@@ -1,8 +1,7 @@
+import 'package:dbara_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dbara_app/screens/sign_up/components/sign_up_form.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-
-import '../../../components/socal_card.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -16,42 +15,43 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.02), // 4%
-                Text("Register Account", style: headingStyle),
-                Text(
-                  "Complete your details or continue \nwith social media",
+                Text("LogIn", style: headingStyle),
+                const Text(
+                  "Please enter your Orange number and password",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                SignUpForm(),
+                const SignUpForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocalCard(
-                      icon: "assets/icons/google-icon.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/facebook-2.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/twitter.svg",
-                      press: () {},
-                    ),
-                  ],
+                Text.rich(
+                  TextSpan(
+                    text: "You do not have an account?",
+                    style: Theme.of(context).textTheme.bodySmall,
+                    children: [
+                      TextSpan(
+                        text: '\nSubscribe',
+                        style: const TextStyle(
+                          //textAlign: TextAlign.center,
+                          color: kPrimaryColor,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CompleteProfileScreen()),
+                            );
+                          },
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: getProportionateScreenHeight(20)),
-                Text(
-                  'By continuing your confirm that you agree \nwith our Term and Condition',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.caption,
-                )
               ],
             ),
           ),
