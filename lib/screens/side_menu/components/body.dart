@@ -23,7 +23,7 @@ class _BodyState extends State<Body> {
       body: Container(
         width: 288,
         height: double.infinity,
-        color: Colors.black,
+        color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,7 +52,7 @@ class _BodyState extends State<Body> {
                 },
                 press: () {
                   menu.input!.change(true);
-                  Future.delayed(Duration(seconds: 1), () {
+                  Future.delayed(const Duration(seconds: 1), () {
                     menu.input!.change(false);
                   });
                   setState(() {

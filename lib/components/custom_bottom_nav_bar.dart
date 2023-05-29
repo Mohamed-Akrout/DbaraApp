@@ -1,9 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../constants.dart';
 import '../enums.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/popular_recipe/popular_screen.dart';
 import '../screens/profile/profile_screen.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -16,22 +17,18 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color inActiveIconColor = Color(0xFFB6B6B6);
+    const Color inActiveIconColor = Color(0xFFB6B6B6);
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -15),
+            offset: const Offset(0, -15),
             blurRadius: 20,
-            color: Color(0xFFDADADA).withOpacity(0.15),
+            color: const Color(0xFFDADADA).withOpacity(0.15),
           ),
         ],
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
-        ),
       ),
       child: SafeArea(
           top: false,
@@ -49,8 +46,13 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                icon: SvgPicture.asset("assets/icons/Heart Icon.svg",
+                  color: MenuState.favourite == selectedMenu
+                    ? kPrimaryColor
+                    : inActiveIconColor,),
+                onPressed: ()  =>
+                  Navigator.pushNamed(context, PopularScreen.routeName),
+
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),

@@ -8,6 +8,8 @@ import '../../enums.dart';
 
 class ProfileScreen extends StatelessWidget {
   static String routeName = "/profile";
+
+  const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
         title: Text("Profile"),
       ),
       body: Body(),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.profile),
     );
   }
 }

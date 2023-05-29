@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
-class CartScreen extends StatelessWidget {
+class SideScreen extends StatelessWidget {
   static String routeName = "/cart";
 
-  const CartScreen({super.key});
+  const SideScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-       body: Body(),
+    return    const Drawer(
+       child: Body(),
     );
   }
 }

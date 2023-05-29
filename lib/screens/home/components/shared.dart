@@ -87,7 +87,7 @@ buildRecipeSubTitle(String text) {
 buildCalories(String text) {
   return Text(
     text,
-    style: TextStyle(
+    style: const TextStyle(
       fontSize: 16,
       color: Colors.black,
       fontWeight: FontWeight.bold,

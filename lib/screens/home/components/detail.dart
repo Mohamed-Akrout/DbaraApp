@@ -1,7 +1,5 @@
 import 'package:dbara_app/screens/home/components/shared.dart';
 import 'package:flutter/material.dart';
-
-
 import '../../../constants.dart';
 import '../../../models/data.dart';
 
@@ -9,7 +7,7 @@ class Detail extends StatelessWidget {
 
   final Recipe recipe;
 
-  Detail({required this.recipe});
+  const Detail({super.key, required this.recipe});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +21,12 @@ class Detail extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
         ),
-        actions: [
+        actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(

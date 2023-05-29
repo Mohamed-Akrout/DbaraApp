@@ -1,28 +1,21 @@
 import 'package:dbara_app/models/data.dart';
 import 'package:flutter/material.dart';
-
 import '../../components/custom_bottom_nav_bar.dart';
 import '../../enums.dart';
 import 'components/body.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static String routeName = "/home";
 
-  const HomeScreen({super.key, required this.recipe, });
+  const HomeScreen({super.key,  required this.recipes });
 
-  final Recipe recipe;
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+  final List<Recipe> recipes;
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Body(recipe: widget.recipe),
-      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.home),
+    return  const Scaffold(
+      body: Body(recipe: null),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
 }

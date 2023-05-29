@@ -43,13 +43,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildFirstNameFormField(),
+          //buildFirstNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildLastNameFormField(),
+          //buildLastNameFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPhoneNumberFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildAddressFormField(),
+          //buildAddressFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(

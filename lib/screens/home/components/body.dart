@@ -1,15 +1,18 @@
+import 'package:dbara_app/screens/home/components/search_field.dart';
 import 'package:dbara_app/screens/home/components/shared.dart';
-import 'package:dbara_app/screens/side_menu/cart_screen.dart';
+import 'package:dbara_app/screens/side_menu/side_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../models/data.dart';
 import 'detail.dart';
 
 class Body extends StatefulWidget {
-  const Body({super.key, required this.recipe, });
+  const Body({
+    super.key,
+    required this.recipe,
+  });
 
-  final Recipe recipe;
-
+  final Recipe? recipe;
 
   @override
   State<Body> createState() => _BodyState();
@@ -17,102 +20,139 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String searchQuery = '';
   bool isFavorite = false;
+  bool isSearching = false;
 
-  void toggleFavorite() {
+  toggleFavorite(int i, List<Recipe> favoriteRecipes) {
     setState(() {
+      recipes[i].likes++;
       isFavorite = !isFavorite;
+      Recipe recipe = favoriteRecipes[i];
+      if (recipe.isFavorite) {
+        favoriteRecipes.remove(recipe);
+      } else {
+        favoriteRecipes.add(recipe);
+      }
     });
   }
+
+  void toggleSearch() {
+    setState(() {
+      isSearching = !isSearching;
+    });
+  }
+
+  void hideSearch() {
+    setState(() {
+      isSearching = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        brightness: Brightness.light,
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-          child: const Icon(Icons.menu_rounded, color: Colors.black),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.search_rounded, color: Colors.black),
-          )
-        ],
-      ),
-      drawer: const CartScreen(),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildTextTitleVariation1('Springy Salads'),
-                  buildTextSubTitleVariation1(
-                      'Healthy and nutritious food recipes'),
-                  SizedBox(
-                    height: 32,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      option('Vegetable', 'assets/icons/salad.png', 0),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      option('Rice', 'assets/icons/rice.png', 1),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      option('Fruit', 'assets/icons/fruit.png', 2),
-                    ],
-                  ),
-                ],
+    return GestureDetector(
+      onTap: hideSearch,
+      child: Scaffold(
+        backgroundColor: Colors.grey[50],
+        key: _scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          brightness: Brightness.light,
+          elevation: 0,
+          leading: GestureDetector(
+            onTap: () {
+              _scaffoldKey.currentState!.openDrawer();
+            },
+            child: const Icon(Icons.menu_rounded, color: Colors.black),
+          ),
+          actions: [
+            if (isSearching)
+              SearchField(
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
+              )
+            else
+              GestureDetector(
+                onTap: toggleSearch,
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 16),
+                  child: Icon(Icons.search_rounded, color: Colors.black),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Container(
-              height: 350,
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                children: buildRecipes(),
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  buildTextTitleVariation2('Popular', false),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  buildTextTitleVariation2('Food', true),
-                ],
-              ),
-            ),
-            Container(
-              height: 190,
-              child: PageView(
-                physics: const BouncingScrollPhysics(),
-                children: buildPopulars(),
-              ),
-            ),
           ],
+        ),
+        drawer: const SideScreen(),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildTextTitleVariation1('Dbara'),
+                    buildTextSubTitleVariation1(
+                        'Healthy and nutritious food recipes'),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        option('Vegetable', 'assets/icons/salad.png', 0),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        option('Rice', 'assets/icons/rice.png', 1),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        option('Fruit', 'assets/icons/fruit.png', 2),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Container(
+                height: 350,
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: buildRecipes(),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    buildTextTitleVariation2('Popular', false),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    buildTextTitleVariation2('Food', true),
+                  ],
+                ),
+              ),
+              Container(
+                height: 190,
+                child: PageView(
+                  physics: const BouncingScrollPhysics(),
+                  children: buildPopulars(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -164,8 +204,8 @@ class _BodyState extends State<Body> {
 
   List<Widget> buildRecipes() {
     List<Widget> list = [];
-    for (var i = 0; i < getRecipes().length; i++) {
-      list.add(buildRecipe(getRecipes()[i], i));
+    for (var i = 0; i < recipes.length; i++) {
+      list.add(buildRecipe(recipes[i], i));
     }
     return list;
   }
@@ -214,13 +254,13 @@ class _BodyState extends State<Body> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildCalories("${recipe.calories} Kcal"),
+                buildCalories("${recipe.likes} Likes"),
                 IconButton(
                   icon: Icon(
                     isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: Colors.red,
                   ),
-                  onPressed: toggleFavorite,
+                  onPressed:  () {}  //toggleFavorite(index),
                 ),
               ],
             ),
@@ -232,13 +272,15 @@ class _BodyState extends State<Body> {
 
   List<Widget> buildPopulars() {
     List<Widget> list = [];
-    for (var i = 0; i < getRecipes().length; i++) {
-      list.add(buildPopular(getRecipes()[i]));
+    for (var i = 0; i < recipes.length; i++) {
+      list.add(buildPopular(recipes[i], i, favoriteRecipes));
     }
     return list;
   }
 
-  Widget buildPopular(Recipe recipe) {
+  Widget buildPopular(Recipe recipe, int i, List<Recipe> favoriteRecipes) {
+    bool isFavorite = favoriteRecipes.contains(recipe);
+    IconData favoriteIcon = isFavorite ? Icons.favorite : Icons.favorite_border;
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -262,7 +304,7 @@ class _BodyState extends State<Body> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -272,13 +314,15 @@ class _BodyState extends State<Body> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildCalories(recipe.calories.toString() + " Kcal"),
+                      buildCalories("${recipe.likes} Kcal"),
                       IconButton(
                         icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          favoriteIcon,
                           color: isFavorite ? Colors.red : null,
                         ),
-                        onPressed: toggleFavorite,
+                        onPressed: () {
+                          toggleFavorite(i, favoriteRecipes);
+                        },
                       ),
                     ],
                   ),
