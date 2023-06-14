@@ -1,13 +1,17 @@
 import 'package:dbara_app/screens/home/components/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../constants.dart';
 import '../../../models/data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Detail extends StatelessWidget {
-
   final Recipe recipe;
 
-  const Detail({super.key, required this.recipe});
+  const Detail({
+    super.key,
+    required this.recipe,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,6 @@ class Detail extends StatelessWidget {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        brightness: Brightness.light,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -26,74 +29,63 @@ class Detail extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 16),
             child: Icon(
-              Icons.favorite_border,
-              color: Colors.black,
+              recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: recipe.isFavorite ? Colors.red : null,
             ),
           ),
         ],
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   buildTextTitleVariation1(recipe.title),
-
                   buildTextSubTitleVariation1(recipe.description),
-
                 ],
               ),
             ),
-
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
-
             Container(
-              height: 310,
-              padding: EdgeInsets.only(left: 16),
+              height: 400,
+              padding: const EdgeInsets.only(left: 16),
               child: Stack(
                 children: [
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       buildTextTitleVariation2('Nutritions', false),
-
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
-
-                      buildNutrition(recipe.calories, "Calories", "Kcal"),
-
-                      SizedBox(
+                      buildNutrition(recipe.Difficult, "Difficulté", "Niveau"),
+                      const SizedBox(
                         height: 16,
                       ),
-
-                      buildNutrition(recipe.carbo, "Carbo", "g"),
-
-                      SizedBox(
+                      buildNutrition(recipe.carbo, "Temps", "Min"),
+                      const SizedBox(
                         height: 16,
                       ),
-
-                      buildNutrition(recipe.protein, "Protein", "g"),
-
+                      buildNutrition(recipe.protein, "Ingrédients", "Nombre"),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      buildNutrition(recipe.likes, "J'aimes", "Nombre"),
                     ],
                   ),
-
                   Positioned(
                     right: -80,
                     child: Hero(
@@ -110,82 +102,87 @@ class Detail extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
-
             Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 80),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 80),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
+                  buildTextTitleVariation2('Apports Nutritifs', false),
+                  buildTextSubTitleVariation1(
+                      "Caractéristiques du poulet : \n- Excellente source de protéines maigres  \n- Peu calorique  \n- Profil lipidique intéressant  \n- Favorise la santé cardiovasculaire  \n- Richesse en vitamines et minéraux"),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   buildTextTitleVariation2('Ingredients', false),
-
-                  buildTextSubTitleVariation1("2 cups pecans, divided"),
-                  buildTextSubTitleVariation1("1 tablespoon unsalted butter, melted"),
-                  buildTextSubTitleVariation1("1/4 teaspoon kosher salt, plus more"),
-                  buildTextSubTitleVariation1("3 tablespoons fresh lemon juice"),
-                  buildTextSubTitleVariation1("2 tablespoons olive oil"),
-                  buildTextSubTitleVariation1("1/2 teaspoon honey"),
-
-                  SizedBox(height: 16,),
-
+                  buildTextSubTitleVariation1("Poulet"),
+                  buildTextSubTitleVariation1("Tomate concentrée"),
+                  buildTextSubTitleVariation1("Harissa"),
+                  buildTextSubTitleVariation1(
+                      "Epices : sel poivre tebel curcuma, cannelle"),
+                  buildTextSubTitleVariation1("Huile d’olive"),
+                  buildTextSubTitleVariation1("500 gr Nwasser"),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   buildTextTitleVariation2('Recipe preparation', false),
-
                   buildTextSubTitleVariation1("STEP 1"),
-                  buildTextSubTitleVariation1("In a medium bowl, mix all the marinade ingredients with some seasoning. Chop the chicken into bite-sized pieces and toss with the marinade. Cover and chill in the fridge for 1 hr or overnight."),
-
+                  buildTextSubTitleVariation1(
+                      "Dans une marmite faire chauffer l’huile et ajouter les oignons découpés finement faire cuire quelques minutes et ajouter le poulet découpé, ajouter la tomate concentrée, harissa et les épices cuire quelques minutes et ajouter l'eau et cuire 30 minutes."),
                   buildTextSubTitleVariation1("STEP 2"),
-                  buildTextSubTitleVariation1("In a large, heavy saucepan, heat the oil. Add the onion, garlic, green chilli, ginger and some seasoning. Fry on a medium heat for 10 mins or until soft."),
-
+                  buildTextSubTitleVariation1(
+                      "Entre temps préparer la Nwasser avec de l’huile, la verser dans le couscoussier et laisser cuire à la vapeur jusqu'à la cuisson de la sauce."),
                   buildTextSubTitleVariation1("STEP 3"),
-                  buildTextSubTitleVariation1("Add the spices with the tomato purée, cook for a further 2 mins until fragrant, then add the stock and marinated chicken. Cook for 15 mins, then add any remaining marinade left in the bowl. Simmer for 5 mins, then sprinkle with the toasted almonds. Serve with rice, naan bread, chutney, coriander and lime wedges, if you like."),
-
+                  buildTextSubTitleVariation1(
+                      "Pour la sauce vous pouvez mettre des légumes : pomme de terre, carottes et poivrons selon votre choix."),
                 ],
               ),
             ),
-
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          backgroundColor: kPrimaryColor,
-          icon: Icon(
-            Icons.play_circle_fill,
+        onPressed: ()  {
+          // Ouvrir la vidéo en utilisant l'URL ou l'application vidéo externe
+          const videoUrl = 'https://www.youtube.com/watch?v=-8T34CfNo9s&ab_channel=Dbarabyorange';
+           launch(videoUrl);
+        },
+        backgroundColor: kPrimaryColor,
+        icon: const Icon(
+          Icons.play_circle_fill,
+          color: Colors.white,
+          size: 32,
+        ),
+        label: const Text(
+          "Watch Video",
+          style: TextStyle(
             color: Colors.white,
-            size: 32,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
-          label: Text(
-            "Watch Video",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          )
+        ),
       ),
     );
   }
 
-  Widget buildNutrition(int value, String title, String subTitle){
+  Widget buildNutrition(dynamic value, String title, String subTitle) {
+    String displayValue = value != null ? value.toString() : 'N/A';
     return Container(
       height: 60,
-      width: 150,
-      padding: EdgeInsets.all(8),
+      width: 170,
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey[50],
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(50),
         ),
         boxShadow: [kBoxShadow],
       ),
       child: Row(
         children: [
-
           Container(
             height: 44,
             width: 44,
@@ -197,31 +194,27 @@ class Detail extends StatelessWidget {
             child: Center(
               child: Text(
                 value.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
-
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               Text(
                 subTitle,
                 style: TextStyle(
@@ -230,13 +223,10 @@ class Detail extends StatelessWidget {
                   color: Colors.grey[400],
                 ),
               ),
-
             ],
           ),
-
         ],
       ),
     );
   }
-
 }

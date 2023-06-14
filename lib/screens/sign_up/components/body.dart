@@ -20,9 +20,9 @@ class Body extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.02), // 4%
-                Text("LogIn", style: headingStyle),
+                Text("Connecter-vous", style: headingStyle),
                 const Text(
-                  "Please enter your Orange number and password",
+                  "Merci de saisir votre numéro Orange et mot de passe",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
@@ -30,7 +30,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 Text.rich(
                   TextSpan(
-                    text: "You do not have an account?",
+                    text: "Vous n'avez pas de compte?",
                     style: Theme.of(context).textTheme.bodySmall,
                     children: [
                       TextSpan(

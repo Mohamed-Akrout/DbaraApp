@@ -1,8 +1,6 @@
 import 'package:dbara_app/screens/home/home_screen.dart';
 import 'package:dbara_app/screens/sign_up/components/body.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants.dart';
 import '../../size_config.dart';
 
 class SignUpScreen extends StatelessWidget {

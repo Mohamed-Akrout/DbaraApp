@@ -2,8 +2,8 @@ import 'package:dbara_app/constants.dart';
 import 'package:dbara_app/screens/splash/components/splash_content.dart';
 import 'package:dbara_app/size_config.dart';
 import 'package:flutter/material.dart';
-
 import '../../../components/default_button.dart';
+import '../../../models/data.dart';
 import '../../sign_up/sign_up.dart';
 
 class Body extends StatefulWidget {
@@ -15,21 +15,6 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentPage = 0;
-  List<Map<String, String>> splashData = [
-    {
-      "text": "Bienvenue à Dbara, Prendre ton plat !",
-      "image": "assets/images/splash_1.png"
-    },
-    {
-      "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/splash_2.png"
-    },
-    {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(

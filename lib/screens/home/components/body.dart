@@ -1,7 +1,10 @@
+import 'package:dbara_app/screens/categories/categories_screen.dart';
 import 'package:dbara_app/screens/home/components/search_field.dart';
 import 'package:dbara_app/screens/home/components/shared.dart';
 import 'package:dbara_app/screens/side_menu/side_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 import '../../../models/data.dart';
 import 'detail.dart';
@@ -24,15 +27,19 @@ class _BodyState extends State<Body> {
   bool isFavorite = false;
   bool isSearching = false;
 
-  toggleFavorite(int i, List<Recipe> favoriteRecipes) {
+  void toggleFavorite(Recipe recipe) {
     setState(() {
-      recipes[i].likes++;
-      isFavorite = !isFavorite;
-      Recipe recipe = favoriteRecipes[i];
+      recipe.isFavorite = !recipe.isFavorite;
       if (recipe.isFavorite) {
-        favoriteRecipes.remove(recipe);
+        recipe.likes++;
+        // Ajouter l'article à la liste des favoris si ce n'est pas déjà fait
+        if (!favorites.contains(recipe)) {
+          favorites.add(recipe);
+        }
       } else {
-        favoriteRecipes.add(recipe);
+        recipe.likes--;
+        // Retirer l'article de la liste des favoris s'il existe
+        favorites.remove(recipe);
       }
     });
   }
@@ -58,7 +65,6 @@ class _BodyState extends State<Body> {
         key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          brightness: Brightness.light,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -84,6 +90,7 @@ class _BodyState extends State<Body> {
                 ),
               ),
           ],
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         drawer: const SideScreen(),
         body: SingleChildScrollView(
@@ -97,23 +104,36 @@ class _BodyState extends State<Body> {
                   children: [
                     buildTextTitleVariation1('Dbara'),
                     buildTextSubTitleVariation1(
-                        'Healthy and nutritious food recipes'),
+                        'Des recettes et astuces magiques qui vous changent la vie'),
                     const SizedBox(
                       height: 32,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        option('Vegetable', 'assets/icons/salad.png', 0),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        option('Rice', 'assets/icons/rice.png', 1),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        option('Fruit', 'assets/icons/fruit.png', 2),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          option('Dbara Zemneya', 'assets/icons/lol/ic_zemnia.svg', 0),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          option(
+                              'Dbara 3la Ghafla', 'assets/icons/lol/ic_ghafla.svg', 1),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          option('Dbara Hlowa', 'assets/icons/lol/ic_hlowa.svg', 2),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          option('Dbara 7afféli', 'assets/icons/lol/ic_haffeli.svg', 3),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          option(
+                              'Dbara El Préférée', 'assets/icons/lol/ic_favoris.svg', 4),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -121,7 +141,7 @@ class _BodyState extends State<Body> {
               const SizedBox(
                 height: 24,
               ),
-              Container(
+              SizedBox(
                 height: 350,
                 child: ListView(
                   physics: const BouncingScrollPhysics(),
@@ -144,7 +164,7 @@ class _BodyState extends State<Body> {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 190,
                 child: PageView(
                   physics: const BouncingScrollPhysics(),
@@ -159,10 +179,24 @@ class _BodyState extends State<Body> {
   }
 
   Widget option(String text, String image, int index) {
+    // Vérifiez si l'index est supérieur ou égal à la taille de la liste optionSelected
+    if (index >= optionSelected.length) {
+      // Ajoutez des valeurs booléennes supplémentaires à la liste pour atteindre l'index spécifié
+      for (int i = optionSelected.length; i <= index; i++) {
+        optionSelected.add(false);
+      }
+    }
     return GestureDetector(
       onTap: () {
         setState(() {
           optionSelected[index] = !optionSelected[index];
+          // Naviguer vers la page spécifique avec les données appropriées
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CategoriesScreen(),
+            ),
+          );
         });
       },
       child: Container(
@@ -180,12 +214,15 @@ class _BodyState extends State<Body> {
             SizedBox(
               height: 32,
               width: 32,
-              child: Image.asset(
+              child: SvgPicture.asset(
                 image,
-                color: optionSelected[index] ? Colors.white : Colors.black,
+                colorFilter: ColorFilter.mode(
+                  optionSelected[index] ? Colors.white : Colors.black,
+                  BlendMode.srcIn,
+              ),
               ),
             ),
-            const SizedBox(
+             const SizedBox(
               width: 8,
             ),
             Text(
@@ -215,7 +252,8 @@ class _BodyState extends State<Body> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Detail(recipe: recipe)),
+          MaterialPageRoute(builder: (context) => Detail(recipe: recipe),
+          ),
         );
       },
       child: Container(
@@ -256,12 +294,15 @@ class _BodyState extends State<Body> {
               children: [
                 buildCalories("${recipe.likes} Likes"),
                 IconButton(
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: Colors.red,
-                  ),
-                  onPressed:  () {}  //toggleFavorite(index),
-                ),
+                    icon: Icon(
+                      recipe.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: recipe.isFavorite ? Colors.red : null,
+                    ),
+                    onPressed: () {
+                      toggleFavorite(recipe);
+                    }),
               ],
             ),
           ],
@@ -271,16 +312,15 @@ class _BodyState extends State<Body> {
   }
 
   List<Widget> buildPopulars() {
-    List<Widget> list = [];
-    for (var i = 0; i < recipes.length; i++) {
-      list.add(buildPopular(recipes[i], i, favoriteRecipes));
-    }
-    return list;
+    return favorites
+        .where((recipe) => recipe.isFavorite)
+        .map((recipe) => buildPopular(recipe))
+        .toList();
   }
 
-  Widget buildPopular(Recipe recipe, int i, List<Recipe> favoriteRecipes) {
-    bool isFavorite = favoriteRecipes.contains(recipe);
-    IconData favoriteIcon = isFavorite ? Icons.favorite : Icons.favorite_border;
+  Widget buildPopular(Recipe recipe) {
+    IconData favoriteIcon =
+        recipe.isFavorite ? Icons.favorite : Icons.favorite_border;
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -314,14 +354,14 @@ class _BodyState extends State<Body> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      buildCalories("${recipe.likes} Kcal"),
+                      buildCalories("${recipe.likes} Likes"),
                       IconButton(
                         icon: Icon(
                           favoriteIcon,
-                          color: isFavorite ? Colors.red : null,
+                          color: recipe.isFavorite ? Colors.red : null,
                         ),
                         onPressed: () {
-                          toggleFavorite(i, favoriteRecipes);
+                          toggleFavorite(recipe);
                         },
                       ),
                     ],

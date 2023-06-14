@@ -37,8 +37,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.4
   provider: ^6.0.5
-  rive: ^0.10.3
+  rive: ^0.11.2
   google_fonts: ^4.0.3
+  url_launcher: ^6.1.11
+  carousel_slider: ^4.2.1
+  shared_preferences: ^2.1.2
+  http: ^0.13.6
+
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +72,8 @@ flutter:
      - assets/images/
      - assets/icons/
      - assets/RiveAssets/
+     - assets/icons/lol/
+     - assets/logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

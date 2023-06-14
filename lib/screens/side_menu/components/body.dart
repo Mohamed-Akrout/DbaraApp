@@ -6,7 +6,6 @@ import 'package:rive/rive.dart';
 import 'info_card.dart';
 import 'menu.dart';
 
-
 class Body extends StatefulWidget {
   const Body({super.key});
 
@@ -29,25 +28,22 @@ class _BodyState extends State<Body> {
           children: [
             const InfoCard(),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 24,
-                  top: 32,
-                  bottom: 16
-              ),
-              child: Text("Parcourir".toUpperCase(),
+              padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+              child: Text(
+                "Parcourir".toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium
-                !.copyWith(color: Colors.black45),
+                    .titleMedium!
+                    .copyWith(color: Colors.black45),
               ),
             ),
             ...sidebarMenus.map(
-                  (menu) => SideMenuTile(
+              (menu) => SideMenuTile(
                 menu: menu,
                 riveonInit: (artboard) {
                   StateMachineController controller =
-                  RiveUtils.getRiveController(artboard,
-                      stateMachineName: menu.rive.stateMachineName);
+                      RiveUtils.getRiveController(artboard,
+                          stateMachineName: menu.rive.stateMachineName);
                   menu.input = controller.findSMI("active") as SMIBool;
                 },
                 press: () {
@@ -63,25 +59,22 @@ class _BodyState extends State<Body> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 24,
-                  top: 32,
-                  bottom: 16
-              ),
-              child: Text("Historique".toUpperCase(),
+              padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+              child: Text(
+                "Historique".toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium
-                !.copyWith(color: Colors.black45),
+                    .titleMedium!
+                    .copyWith(color: Colors.black45),
               ),
             ),
             ...sidebarMenus2.map(
-                  (menu) => SideMenuTile(
+              (menu) => SideMenuTile(
                 menu: menu,
                 riveonInit: (artboard) {
                   StateMachineController controller =
-                  RiveUtils.getRiveController(artboard,
-                      stateMachineName: menu.rive.stateMachineName);
+                      RiveUtils.getRiveController(artboard,
+                          stateMachineName: menu.rive.stateMachineName);
                   menu.input = controller.findSMI("active") as SMIBool;
                 },
                 press: () {
@@ -102,4 +95,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-

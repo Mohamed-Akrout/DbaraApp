@@ -1,4 +1,5 @@
 
+import 'package:dbara_app/screens/game/game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../constants.dart';
@@ -55,8 +56,12 @@ class CustomBottomNavBar extends StatelessWidget {
 
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onPressed: () {},
+                icon: SvgPicture.asset("assets/icons/game.svg",
+                  color: MenuState.favourite == selectedMenu
+                ? kPrimaryColor
+                    : inActiveIconColor,),
+                onPressed: () =>
+                    Navigator.pushNamed(context, GameScreen.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset(

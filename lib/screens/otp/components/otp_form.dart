@@ -110,7 +110,7 @@ class _OtpFormState extends State<OtpForm> {
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
-            text: "Continue",
+            text: "Continuer",
             press: () {
               Navigator.pushNamed(context, HomeScreen.routeName);
             },
