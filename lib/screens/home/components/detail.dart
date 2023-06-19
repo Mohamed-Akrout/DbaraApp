@@ -1,11 +1,14 @@
 import 'package:dbara_app/screens/home/components/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/services.dart';
+import '../../../components/methode.dart';
 import '../../../constants.dart';
 import '../../../models/data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Detail extends StatelessWidget {
+
+class Detail extends StatefulWidget {
   final Recipe recipe;
 
   const Detail({
@@ -13,6 +16,12 @@ class Detail extends StatelessWidget {
     required this.recipe,
   });
 
+  @override
+  State<Detail> createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
+  int numberOfStars = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +42,27 @@ class Detail extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Icon(
-              recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: recipe.isFavorite ? Colors.red : null,
+              widget.recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: widget.recipe.isFavorite ? Colors.red : null,
             ),
+          ),
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Partager'),
+                  onTap: () => showShareAlert(context), // Afficher l'alerte de partage
+                ),
+              ),
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.comment),
+                  title: Text('Commenter'),
+                  onTap: () => showCommentAlert(context), // Afficher l'alerte de commentaire
+                ),
+              ),
+            ],
           ),
         ],
         systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -50,8 +77,8 @@ class Detail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildTextTitleVariation1(recipe.title),
-                  buildTextSubTitleVariation1(recipe.description),
+                  buildTextTitleVariation1(widget.recipe.title),
+                  buildTextSubTitleVariation1(widget.recipe.description),
                 ],
               ),
             ),
@@ -71,36 +98,57 @@ class Detail extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.Difficult, "Difficulté", "Niveau"),
+                      buildNutrition(widget.recipe.Difficult, "Difficulté", "Niveau"),
                       const SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.carbo, "Temps", "Min"),
+                      buildNutrition(widget.recipe.carbo, "Temps", "Min"),
                       const SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.protein, "Ingrédients", "Nombre"),
+                      buildNutrition(widget.recipe.protein, "Ingrédients", "Nombre"),
                       const SizedBox(
                         height: 16,
                       ),
-                      buildNutrition(recipe.likes, "J'aimes", "Nombre"),
+                      buildNutrition(widget.recipe.likes, "J'aimes", "Nombre"),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      RatingBar.builder(
+                        initialRating: 0, // Notation initiale
+                        minRating: 1, // Note minimale
+                        direction: Axis.horizontal,
+                        allowHalfRating: true, // Permettre une notation avec demi-étoiles
+                        itemCount: 5, // Nombre total d'étoiles
+                        itemSize: 24, // Taille des étoiles
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          setState(() {
+                            numberOfStars = rating.toInt(); // Mettre à jour le nombre d'étoiles notées
+                          });
+                        },
+                      ),
                     ],
                   ),
                   Positioned(
                     right: -80,
                     child: Hero(
-                      tag: recipe.image,
+                      tag: widget.recipe.image,
                       child: Container(
                         height: 310,
                         width: 310,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(recipe.image),
+                            image: AssetImage(widget.recipe.image),
                             fit: BoxFit.fitHeight,
                           ),
                         ),
                       ),
                     ),
+
                   ),
                 ],
               ),

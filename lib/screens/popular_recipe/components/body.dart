@@ -12,6 +12,8 @@ class PopularArticlesPage extends StatefulWidget {
 
 class _PopularArticlesPageState extends State<PopularArticlesPage> {
 
+
+
   void toggleFavorite(Recipe recipe) {
     setState(() {
       recipe.isFavorite = !recipe.isFavorite;

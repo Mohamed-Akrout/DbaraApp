@@ -1,26 +1,66 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:http/http.dart' as http;
+//import 'dart:convert';
 
-class Api {
-  token() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var token = localStorage.getString('token');
-    return '?token=$token';
-  }
+//Future<Recipe> fetchData() async {
+//var url = Uri.parse('https://votre-backend.com/votre-endpoint');
 
-  login(data) async {
-    var fullUrl = 'http://127.0.0.1:8000/authentication' + await token();
+//var response = await http.get(url);
 
-    Response response = await http.post(
-      Uri.parse(fullUrl),
-      body: jsonEncode(data),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+//if (response.statusCode == 200) {
+// La requête a réussi, vous pouvez traiter les données ici
+//var data = response.body;
+//print(data);
+//} else {
+// La requête a échoué
+// print('Erreur de requête: ${response.statusCode}');
+//}
+//}
 
-    return response;
-  }
-}
+//class Recipe {
+//String title;
+//String description;
+//String image;
+//String Difficult;
+//int carbo;
+//int protein;
+//int likes;
+//bool isFavorite;
+// Add more properties here
+
+//Recipe({
+//required this.title,
+//required this.description,
+//required this.image,
+//required this.Difficult,
+//required this.carbo,
+//required this.protein,
+//required this.likes,
+//required this.isFavorite,
+//});
+
+//factory Recipe.fromJson(Map<String, dynamic> json) {
+//return Recipe(
+//title: json['title'],
+//description: json['description'],
+//image: json['image'],
+//Difficult: json['Difficult'],
+//carbo: json['carbo'],
+//protein: json['protein'],
+//likes: json['likes'],
+//isFavorite: json['isFavorite'],
+// Parse more properties from the JSON response
+//);
+//}
+//}
+
+//Future<List<Recipe>> fetchDbaraRecettes() async {
+//final response = await http
+//  .get(Uri.parse('http://your-symfony-app-url/recette/recetteApi'));
+
+//if (response.statusCode == 200) {
+//final jsonList = json.decode(response.body) as List;
+//return jsonList.map((json) => Recipe.fromJson(json)).toList();
+//} else {
+//throw Exception('Failed to fetch DbaraRecettes');
+//}
+//}

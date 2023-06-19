@@ -73,7 +73,7 @@ buildRecipeTitle(String text) {
 
 buildRecipeSubTitle(String text) {
   return Padding(
-    padding: EdgeInsets.only(bottom: 16),
+    padding: const EdgeInsets.only(bottom: 16),
     child: Text(
       text,
       style: TextStyle(

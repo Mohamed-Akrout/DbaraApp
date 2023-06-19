@@ -9,8 +9,11 @@ class SideScreen extends StatelessWidget {
   const SideScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return    const Drawer(
-       child: Body(),
+    return Drawer(
+      child: Container(
+        color: Colors.white24,
+       child: const Body(),
+      ),
     );
   }
 }

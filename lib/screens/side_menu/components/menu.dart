@@ -5,11 +5,13 @@ class Menu {
   final String title;
   late SMIBool? input;
   final RiveModel rive;
+  final String route;
 
   Menu({
     this.input,
     required this.title,
-    required this.rive
+    required this.rive,
+    required this.route,
   });
 
   set setInput(SMIBool status){
@@ -24,6 +26,7 @@ List<Menu> sidebarMenus = [
         src: "assets/RiveAssets/icons.riv",
         artboard: "HOME",
         stateMachineName: "HOME_interactivity"),
+    route: "/home",
   ),
   Menu(
     title: "Search",
@@ -31,6 +34,7 @@ List<Menu> sidebarMenus = [
         src: "assets/RiveAssets/icons.riv",
         artboard: "SEARCH",
         stateMachineName: "SEARCH_Interactivity"),
+    route: '',
   ),
   Menu(
     title: "Favorites",
@@ -38,6 +42,7 @@ List<Menu> sidebarMenus = [
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",
         stateMachineName: "STAR_Interactivity"),
+    route: "/favourite",
   ),
   Menu(
     title: "Jeux",
@@ -45,60 +50,34 @@ List<Menu> sidebarMenus = [
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
+    route: "/game",
   ),
 ];
 
 List<Menu> sidebarMenus2 = [
   Menu(
-    title: "History",
+    title: "Dbara LIVE",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "TIMER",
         stateMachineName: "TIMER_Interactivity"),
+    route: '',
   ),
   Menu(
-    title: "Notifications",
+    title: "Dbara Reel",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "BELL",
         stateMachineName: "BELL_Interactivity"),
-  ),
-];
-
-List<Menu> bottomNavItems = [
-  Menu(
-    title: "Chat",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    route: '',
   ),
   Menu(
-    title: "Search",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
+      title: "Chef",
+      rive: RiveModel(
+      src: "assets/RiveAssets/icons.riv",
+      artboard: 'USER',
+      stateMachineName: 'USER_Interactivity',
   ),
-  Menu(
-    title: "Timer",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
-  ),
-  Menu(
-    title: "Notification",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
-  ),
-  Menu(
-    title: "Profile",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "USER",
-        stateMachineName: "USER_Interactivity"),
+    route: "/chef",
   ),
 ];

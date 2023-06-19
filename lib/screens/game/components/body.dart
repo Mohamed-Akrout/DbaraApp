@@ -1,20 +1,24 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../components/methode.dart';
 import '../../../constants.dart';
 import '../../../models/data.dart';
 import '../../home/components/shared.dart';
 
 class Body extends StatefulWidget {
 
-  const Body({super.key});
+
+
+  const Body({super.key, this.recipe});
+  final Recipe? recipe;
 
   @override
   State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-
+  bool isFavorite = false;
   void toggleFavorite(Recipe recipe) {
     setState(() {
       recipe.isFavorite = !recipe.isFavorite;
@@ -28,9 +32,6 @@ class _BodyState extends State<Body> {
         recipe.likes -= 1;
         // Supprimer l'article de la liste des favoris s'il est présent
         favorites.remove(recipe);
-        // Mettre à jour l'état de l'article dans la liste des articles de la page d'accueil
-        Recipe homeArticle = recipes.firstWhere((element) => element.title == recipe.title);
-        homeArticle.isFavorite = false;
       }
     });
   }
@@ -132,19 +133,24 @@ class _BodyState extends State<Body> {
                             // Action à effectuer lors du clic sur le bouton
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.orange, // Couleur orange
-                            onPrimary: Colors.white, // Couleur du texte (blanc ici)
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.orange, // Couleur du texte (blanc ici)
                             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16), // Taille du bouton
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10), // Bordure arrondie
                             ),
                           ),
-                          child: const Text(
-                            'Participer',
-                            style: TextStyle(
-                              fontSize: 18, // Taille du texte
+                          child: TextButton(
+                            onPressed: () {
+                              showUploadPhotoDialog(context);
+                            },
+                            child: const Text(
+                              'Participer',
+                              style: TextStyle(
+                                fontSize: 18, // Taille du texte
+                              ),
                             ),
-                        ),
+                          ),
                       ),
                       ),
                       Stack(
@@ -191,19 +197,8 @@ class _BodyState extends State<Body> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  jeu.nom,
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  jeu.description,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
+                                                buildRecipeTitle(jeu.nom),
+                                                buildRecipeSubTitle(jeu.prenom),
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [

@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 import '../../../models/data.dart';
 import 'detail.dart';
+import 'package:http/http.dart' as http;
 
 class Body extends StatefulWidget {
   const Body({
@@ -22,6 +23,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  //late Future<Recipe> futureAlbum;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String searchQuery = '';
   bool isFavorite = false;
@@ -55,6 +57,8 @@ class _BodyState extends State<Body> {
       isSearching = false;
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -113,25 +117,28 @@ class _BodyState extends State<Body> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          option('Dbara Zemneya', 'assets/icons/lol/ic_zemnia.svg', 0),
+                          option('Dbara Zemneya',
+                              'assets/icons/lol/ic_zemnia.svg', 0),
                           const SizedBox(
                             width: 8,
                           ),
-                          option(
-                              'Dbara 3la Ghafla', 'assets/icons/lol/ic_ghafla.svg', 1),
+                          option('Dbara 3la Ghafla',
+                              'assets/icons/lol/ic_ghafla.svg', 1),
                           const SizedBox(
                             width: 8,
                           ),
-                          option('Dbara Hlowa', 'assets/icons/lol/ic_hlowa.svg', 2),
+                          option('Dbara Hlowa', 'assets/icons/lol/ic_hlowa.svg',
+                              2),
                           const SizedBox(
                             width: 8,
                           ),
-                          option('Dbara 7afféli', 'assets/icons/lol/ic_haffeli.svg', 3),
+                          option('Dbara 7afféli',
+                              'assets/icons/lol/ic_haffeli.svg', 3),
                           const SizedBox(
                             width: 8,
                           ),
-                          option(
-                              'Dbara El Préférée', 'assets/icons/lol/ic_favoris.svg', 4),
+                          option('Dbara El Préférée',
+                              'assets/icons/lol/ic_favoris.svg', 4),
                         ],
                       ),
                     ),
@@ -141,6 +148,30 @@ class _BodyState extends State<Body> {
               const SizedBox(
                 height: 24,
               ),
+              //SizedBox(
+                //height: 350,
+                //child: FutureBuilder<List<Widget>>(
+                  //future: buildRecipes(),
+                  //builder: (BuildContext context,
+                    //  AsyncSnapshot<List<Widget>> snapshot) {
+                    //if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Afficher un indicateur de chargement pendant que les recettes sont récupérées
+                      //return CircularProgressIndicator();
+                    //} else if (snapshot.hasError) {
+                      // Gérer les erreurs ici
+                      //return Text(
+                        //  'Erreur de récupération des recettes : ${snapshot.error}');
+                    //} else {
+                      // La récupération des recettes est terminée, vous pouvez utiliser la liste de widgets
+                      //return ListView(
+                        //physics: const BouncingScrollPhysics(),
+                        //scrollDirection: Axis.horizontal,
+                        //children: snapshot.data ?? [],
+                      //);
+                    //}
+                  //},
+                //),
+              //),
               SizedBox(
                 height: 350,
                 child: ListView(
@@ -219,10 +250,10 @@ class _BodyState extends State<Body> {
                 colorFilter: ColorFilter.mode(
                   optionSelected[index] ? Colors.white : Colors.black,
                   BlendMode.srcIn,
-              ),
+                ),
               ),
             ),
-             const SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(
@@ -239,6 +270,21 @@ class _BodyState extends State<Body> {
     );
   }
 
+  //Future<List<Widget>> buildRecipes() async {
+   // List<Widget> list = [];
+
+    //try {
+      //var recipes = await fetchDbaraRecettes();
+      //for (var i = 0; i < recipes.length; i++) {
+        //list.add(buildRecipe(recipes[i], i));
+      //}
+    //} catch (error) {
+      // Gérez les erreurs ici
+      //print('Erreur de récupération des recettes : $error');
+    //}
+    //return list;
+  //}
+
   List<Widget> buildRecipes() {
     List<Widget> list = [];
     for (var i = 0; i < recipes.length; i++) {
@@ -252,7 +298,8 @@ class _BodyState extends State<Body> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Detail(recipe: recipe),
+          MaterialPageRoute(
+            builder: (context) => Detail(recipe: recipe),
           ),
         );
       },

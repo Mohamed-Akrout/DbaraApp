@@ -22,7 +22,7 @@ class _BodyState extends State<Body> {
       body: Container(
         width: 288,
         height: double.infinity,
-        color: Colors.white,
+        color: Colors.white24,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -47,6 +47,7 @@ class _BodyState extends State<Body> {
                   menu.input = controller.findSMI("active") as SMIBool;
                 },
                 press: () {
+                  Navigator.pushNamed(context, menu.route);
                   menu.input!.change(true);
                   Future.delayed(const Duration(seconds: 1), () {
                     menu.input!.change(false);
@@ -61,7 +62,7 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
               child: Text(
-                "Historique".toUpperCase(),
+                "DBARA".toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!
@@ -78,6 +79,7 @@ class _BodyState extends State<Body> {
                   menu.input = controller.findSMI("active") as SMIBool;
                 },
                 press: () {
+                  Navigator.pushNamed(context, menu.route);
                   menu.input!.change(true);
                   Future.delayed(const Duration(seconds: 1), () {
                     menu.input!.change(false);

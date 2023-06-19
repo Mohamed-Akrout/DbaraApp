@@ -1,4 +1,5 @@
 import 'package:dbara_app/screens/categories/categories_screen.dart';
+import 'package:dbara_app/screens/chef/chef_screen.dart';
 import 'package:dbara_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dbara_app/screens/game/game_screen.dart';
 import 'package:dbara_app/screens/home/home_screen.dart';
@@ -22,5 +23,6 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => const ProfileScreen(),
   PopularScreen.routeName: (context) => const PopularScreen(),
   CategoriesScreen.routeName: (context) => const CategoriesScreen(),
-  GameScreen.routeName: (context) =>  GameScreen(onClose: () {  },)
+  GameScreen.routeName: (context) =>  const GameScreen(),
+  ChefScreen.routeName: (context) =>  const ChefScreen()
 };
